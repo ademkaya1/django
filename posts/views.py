@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views.generic import ListView, TemplateView, DetailView
-from .models import Post,Category
+from .models import Post, Category
 
 class IndexView(ListView):
     template_name = 'posts/index.html'
@@ -22,3 +22,7 @@ class PostDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(PostDetail, self).get_context_data(**kwargs)
         return context
+
+
+class CategoryDetail(ListView):
+    pass

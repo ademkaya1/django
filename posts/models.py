@@ -16,6 +16,9 @@ class Category(models.Model):
         self.slug = slugify(self.title)
         super(Category, self).save(*args, **kwargs)
 
+    def post_count(self):
+        return self.posts.all().count()
+
 
 class Post(models.Model):
     title = models.CharField(max_length=150)
@@ -24,7 +27,7 @@ class Post(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to='uploads/', default='uploads/bilisimm.jpg')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)                      # djangoda user modeli zaten mevcut
     slug = models.SlugField(default="slug")    # burada url adresimizi içeriğin kendi başlığıyla oluşturmak için kullandık
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)         #bir kategorinin bir sürü postu olabilir. (one to many)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1, related_name="posts")         #bir kategorinin bir sürü postu olabilir. (one to many)
 
 
     def __str__(self):
